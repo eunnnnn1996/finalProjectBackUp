@@ -1,0 +1,128 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+.jejugothic * { 
+ font-family: 'Jeju Gothic', sans-serif;
+}
+/*키트 목록 display: flex;*/
+ul{
+	list-style:none;
+}
+li{
+	float:left;
+}
+.list-main {
+	margin: 25px auto;
+	padding: 0;
+	width: 1100px;
+	text-align: center;
+	flex-direction:row;
+	justify-content:space-between;	
+}
+div#page_num{
+    text-align: center;
+}
+
+/*검색창*/
+input[type="search"]{
+	width: 250px;
+	height:30px;
+}
+input[type="submit"]{
+	width: 50px;
+	height:30px;
+	position: relative;
+    left: 10px;
+}
+input[type="button"]{
+	width: 70px;
+	height:30px;
+	text-align: center;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+input[id="button2"]{
+	width: 200px;
+	height:30px;
+	position: relative;
+	bottom:20px;
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 110%;
+}
+select#keyfield{
+	width: 100px;
+	height:30px;
+	text-align: center;
+	position: relative;
+    right: 10px;
+}
+input#button1{
+	position: relative;
+    left: 200px;
+}
+
+form#search_form{
+	height:30px;
+}
+.kit_listpage{
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.box{
+	width: 200px;
+	padding: 0px 20px 30px 20px;
+	position: relative;
+    right: 20px;
+    font-family: 'Jeju Gothic', sans-serif;
+}
+div#heart{
+	font-size: 250%;
+	color: #F5A9D0;
+	position: relative;
+    left:70px;
+    bottom:50px;
+}
+div#kit_num{
+	font-weight:20;
+	color:#fff;
+	position: relative;
+    left: 75px;
+    top:20px;
+    
+}
+div#kit_name{
+	font-weight:500;
+	font-size: 120%;
+	float: left;
+	position: relative;
+    bottom:40px;
+}
+div.price{
+	position: absolute;
+}
+
+div#kit_price{
+	float: right;
+}
+div#kit_quantity{
+	font-size: 80%;
+    position: relative;
+    bottom:40px;
+    left:30px;
+}
+div.box3{
+	width: 200px;
+	height:40px;
+	position: relative;
+    bottom:10px;
+}
+div#pagenum{
+	
+}
+
+<!--     display: flex; justify-content: flex-end -->
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="offclassList" extends="main">
+    	<put-attribute name="title" value="오프라인 클래스"/>
+    	<put-attribute name="body" value="/WEB-INF/views/offclass/offclassList.jsp"/>
+    </definition>
+    <definition name="offclassOpen" extends="main">
+    	<put-attribute name="title" value="오프라인 클래스 등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/offclass/offclassOpen.jsp"/>
+    </definition>
+   <definition name="offclassDetail" extends="main">
+    	<put-attribute name="title" value="오프라인 클래스 상세"/>
+    	<put-attribute name="body" value="/WEB-INF/views/offclass/offclassDetail.jsp"/>
+    </definition>
+    <definition name="offclassUpdate" extends="main">
+    	<put-attribute name="title" value="오프라인 클래스 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/offclass/offclassUpdate.jsp"/>
+    </definition>
+</tiles-definitions>
+
+

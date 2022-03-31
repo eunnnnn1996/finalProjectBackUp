@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.myclass.dao.MyclassMapper"> 
+	<select id="selectList" parameterType="map" resultType="MyclassVO">
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (
+		SELECT on_num,category_num,on_content,on_name,on_price,user_num FROM onclass where user_num = #{user_num}
+		UNION all
+		SELECT off_num,category_num,off_content,off_name,off_price,user_num FROM offclass where user_num = #{user_num} order by on_num
+		)a)
+	   <![CDATA[
+	   WHERE rnum >= #{start} AND rnum <= #{end}
+	   ]]>
+	   <if test="keyword != '' and keyfield == 1">
+      		and on_name LIKE '%' || #{keyword} || '%'
+      	</if>
+	</select>
+	
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		  SELECT count(*) FROM (SELECT a.*,rownum rnum FROM (
+			SELECT on_num,category_num,on_content,on_name,on_price,user_num FROM onclass
+			UNION all
+			SELECT off_num,category_num,off_content,off_name,off_price,user_num FROM offclass 
+			)a) 
+		<where>
+        	<if test="keyword != '' and keyfield == 1">
+        		on_name LIKE '%' || #{keyword} || '%'
+        	</if>
+        </where>
+	</select>
+
+	<select id="selectRegisterList" parameterType="map" resultType="paymentVO">
+		SELECT * FROM (SELECT a.*,rownum rnum
+		FROM (SELECT b.onreg_num,c.on_num,b.on_regdate,b.on_moregdate,c.on_status
+		FROM onreg b JOIN onreg_detail c on b.onreg_num = c.onreg_num
+		where b.user_num = #{user_num}
+		ORDER BY b.onreg_num DESC)a) 
+		<![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	</select>
+	
+	<select id="selectRowCount2" parameterType="map" resultType="integer">
+		    SELECT count(*) FROM (SELECT a.*,rownum rnum FROM (
+			SELECT *
+			FROM onreg b
+			JOIN onreg_detail c on b.onreg_num = c.onreg_num
+			where b.user_num = #{user_num}
+			)a)
+	</select>
+</mapper>

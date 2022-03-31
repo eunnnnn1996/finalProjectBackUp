@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.main.dao.MainMapper">
+<select id="selectList" parameterType="map" resultType="onclassVO">
+			SELECT * FROM (SELECT a.*,rownum rnum FROM (
+			SELECT on_num,category_num,on_content,on_name,on_price FROM onclass 
+			<if test="category_num == 0"><![CDATA[where category_num <= '5']]></if>
+			<if test="category_num == 1">where category_num = '1'</if>
+			<if test="category_num == 2">where category_num = '2'</if>
+			<if test="category_num == 3">where category_num = '3'</if>
+			<if test="category_num == 4">where category_num = '4'</if>
+			<if test="category_num == 5">where category_num = '5'</if>
+			UNION all
+			SELECT off_num,category_num,off_content,off_name,off_price FROM offclass
+			<if test="category_num == 0"><![CDATA[where category_num <= '5']]></if>
+			<if test="category_num == 1">where category_num = '1'</if>
+			<if test="category_num == 2">where category_num = '2'</if>
+			<if test="category_num == 3">where category_num = '3'</if>
+			<if test="category_num == 4">where category_num = '4'</if>
+			<if test="category_num == 5">where category_num = '5'</if>
+			)a)
+		   <![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	  		            
+	</select>
+<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT SUM(cnt) FROM 
+		( SELECT count(*) as CNT FROM onclass 
+		<if test="category_num == 0"><![CDATA[where category_num <= '5']]></if>
+		<if test="category_num == 1">where category_num = '1'</if>
+		<if test="category_num == 2">where category_num = '2'</if>
+		<if test="category_num == 3">where category_num = '3'</if>
+		<if test="category_num == 4">where category_num = '4'</if>
+		<if test="category_num == 5">where category_num = '5'</if>
+		UNION all
+		SELECT count(*) as CNT FROM offclass
+		<if test="category_num == 0"><![CDATA[where category_num <= '5']]></if>
+		<if test="category_num == 1">where category_num = '1'</if>
+		<if test="category_num == 2">where category_num = '2'</if>
+		<if test="category_num == 3">where category_num = '3'</if>
+		<if test="category_num == 4">where category_num = '4'</if>
+		<if test="category_num == 5">where category_num = '5'</if>
+		)
+</select>
+</mapper>

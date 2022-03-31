@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+
+ul#login_form{
+	font-size: 130%;
+    border: 3px solid #000000;
+    height:150px;
+    position: relative;
+    left:100px;
+    width: 500px;
+    margin: 0 auto;
+	padding: 10px 10px;
+}
+    
+input#id{
+	width: 200px;
+	height:25px;
+}
+input#passwd{
+	width: 200px;
+	height:25px;
+}
+input[type=number]{
+	width: 100px;
+	height:25px;
+	
+}
+input[type=text]{
+	width: 100px;
+	height:25px;
+	
+}
+li#file{
+	position: relative;
+    top:30px;
+
+}
+li#passwd{
+	position: relative;
+    top:60px;
+    margin:0 auto;
+}
+
+li#id{
+	position: relative;
+    top:30px;
+    margin:0 auto;
+  
+}
+
+.onqnaWrite{
+	position: relative;
+	top:10px;
+	left:300px;
+}

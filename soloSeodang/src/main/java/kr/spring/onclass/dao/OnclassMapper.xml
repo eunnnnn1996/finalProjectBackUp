@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.onclass.dao.OnclassMapper"> 
+	<select id="selectList" parameterType="map" resultType="onclassVO">
+		SELECT
+		  *
+		FROM (SELECT 
+		       a.*,
+		       rownum rnum
+		      FROM (SELECT 
+		               b.on_num,
+		               <![CDATA[
+		               REPLACE(REPLACE(b.on_name,'<','&lt;'),'>','&gt;') on_name,
+		               ]]>
+		               b.reg_date,
+		               m.id ,
+		               b.on_content,
+		               m.user_num,
+		               b.hit,
+		               b.filename
+		            FROM onclass b
+		            JOIN ouser m 
+		            ON b.user_num = m.user_num
+		            <where>
+		            	<if test="keyword != '' and keyfield == 1">
+		            		b.on_name LIKE '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 2">
+		            	    m.id LIKE '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 3">
+		            		b.on_content LIKE '%' || #{keyword} || '%'
+		            	</if>
+		            	<if test="keyword != '' and keyfield == 4">
+		            		b.on_name LIKE '%' || #{keyword} || '%' or
+		            		b.on_content LIKE '%' || #{keyword} || '%'
+		            	</if>
+		            </where>
+		            <if test="category == 0">
+		            ORDER BY b.on_num DESC)a)
+		            </if>
+		            <if test="category == 1">
+		            ORDER BY b.hit DESC)a)
+		            </if>
+	   <![CDATA[
+	   WHERE rnum >= #{start} AND rnum <= #{end}
+	   ]]>	            
+	</select>
+	
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT
+		  COUNT(*)
+		FROM onclass b
+		JOIN ouser m
+		ON b.user_num = m.user_num
+		<where>
+        	<if test="keyword != '' and keyfield == 1">
+        		b.on_name LIKE '%' || #{keyword} || '%'
+        	</if>
+        	<if test="keyword != '' and keyfield == 2">
+        	    m.id LIKE '%' || #{keyword} || '%'
+        	</if>
+        	<if test="keyword != '' and keyfield == 3">
+        		b.on_content LIKE '%' || #{keyword} || '%'
+        	</if>
+        	<if test="keyword != '' and keyfield == 4">
+        		b.on_name LIKE '%' || #{keyword} || '%' or
+        		b.on_content LIKE '%' || #{keyword} || '%'
+        	</if>
+        </where>
+	</select>
+	<update id="updateOnclass" parameterType="onclassVO">
+		UPDATE onclass SET
+		  <if test="filename != ''">
+		  	uploadfile=#{uploadfile},
+		  	filename=#{filename},
+		  </if>
+		  category_num=#{category_num},
+		  on_name=#{on_name},
+		  on_price=#{on_price},
+		  on_content=#{on_content},
+		  modify_date=SYSDATE
+	   WHERE on_num=#{on_num}
+	</update>
+	
+	<!-- 평점 리스트 -->
+	<select id="listAll" parameterType="map" resultType="ostarVO">
+		SELECT
+		  *
+		FROM (SELECT 
+		       a.*,
+		       rownum rnum
+		      FROM (SELECT 	
+		               b.ostar_num,
+		               b.on_num,
+		               <![CDATA[
+		               REPLACE(REPLACE(b.rating,'<','&lt;'),'>','&gt;') rating,
+		               ]]>
+		               b.text,
+		               m.id ,
+		               m.user_num,
+		               b.reg_date
+		            FROM ostar b
+		            JOIN ouser m 
+		            ON b.user_num = m.user_num
+		            ORDER BY b.ostar_num DESC)a)
+	   <![CDATA[
+	   WHERE rnum >= #{start} AND rnum <= #{end} and on_num = #{on_num}
+	   ]]>	            
+	</select>
+	<!-- 해당 게시물 평점 불러오기 카운트 -->
+	<select id="selectRowCountRating" parameterType="integer" resultType="integer">
+		SELECT COUNT(*)
+		FROM ostar where on_num = #{on_num}
+	</select>
+	<select id="selectListReply" parameterType="map" resultType="ostarReplyVO">
+       SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT
+				ore_num,
+               <![CDATA[
+               REPLACE(REPLACE(ore_content,'<','&lt;'),'>','&gt;') ore_content,
+               ]]>
+                ore_date,
+                ostar_num,
+                user_num,
+                id
+                FROM ostar_reply JOIN ouser USING(user_num) WHERE ostar_num = #{ostar_num}
+				ORDER BY ore_num DESC)a)
+       <![CDATA[
+       WHERE rnum >= #{start} AND rnum <= #{end}
+       ]]>                                 
+    </select>
+</mapper>
+
+
+
+
+
+
+
