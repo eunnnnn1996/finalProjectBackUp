@@ -1,5 +1,6 @@
 package kr.spring.onclass.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import kr.spring.onclass.vo.OnclassVO;
 import kr.spring.onclass.vo.OnlikeVO;
 import kr.spring.onclass.vo.OstarReplyVO;
 import kr.spring.onclass.vo.OstarVO;
+import kr.spring.onclass.vo.UploadFileVO;
 import kr.spring.user.vo.UserVO;
 
 
@@ -27,7 +29,10 @@ public class OnclassServiceImpl implements OnclassService{
 	@Override
 	public void insertOnclass(OnclassVO onclassVO) {
 		// TODO Auto-generated method stub
-		onclassMapper.insertOnclass(onclassVO);
+
+		 //onclassVO.setOn_num(onclassMapper.selectOn_num());
+		 onclassMapper.insertOnclass(onclassVO);
+
 	}
 
 	@Override
@@ -157,6 +162,8 @@ public class OnclassServiceImpl implements OnclassService{
 	public void deleteOstar(int ostar_num) {
 		// TODO Auto-generated method stub
 		//댓글 먼저 삭제
+
+		onclassMapper.deleteReplyByQnaNum(ostar_num);
 		onclassMapper.deleteOstar(ostar_num);
 	}
 	@Override
@@ -205,6 +212,38 @@ public class OnclassServiceImpl implements OnclassService{
 	public OstarReplyVO selectOstarReply(Integer ostar_num) {
 		// TODO Auto-generated method stub
 		return onclassMapper.selectOstarReply(ostar_num);
+	}
+
+	@Override
+	public int selectOn_num() {
+		// TODO Auto-generated method stub
+		return onclassMapper.selectOn_num();
+	}
+
+	
+	//다중 파일 업로드
+	@Override
+	public void fileUpload(String originalfileName, String saveFileName, long fileSize, int on_num) {
+	    HashMap<String, Object> hm = new HashMap<String, Object>();
+	    hm.put("originalfileName", originalfileName);
+	    hm.put("saveFileName", saveFileName);
+	    hm.put("fileSize", fileSize);
+	    hm.put("on_num", on_num);
+	    
+	    
+	    onclassMapper.uploadFile(hm);
+	}
+
+	@Override
+	public int currSelect() {
+		// TODO Auto-generated method stub
+		return onclassMapper.currSelect();
+	}
+
+	@Override
+	public List<UploadFileVO> selectFile(int on_num) {
+		// TODO Auto-generated method stub
+		return onclassMapper.selectFile(on_num);
 	}
 
 }

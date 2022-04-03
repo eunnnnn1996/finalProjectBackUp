@@ -43,10 +43,11 @@
 	<div class="home">
 		<ul>
 			<li>
+				${onclass.on_name}
 				<div  onclick="location.href='onclassDetail.do?on_num=${onclass.on_num}'">
 					<div class="list_img">
-						<img src="imageView.do?on_num=${onclass.on_num}" 
-	                                     					 style="max-width:200px;max-height:200px;margin-left:15px; margin-top:10px; border-radius: 10%;">	                                     					 
+						<%-- <img src="imageView.do?on_num=${onclass.on_num}" 
+	                                     					 style="max-width:200px;max-height:200px;margin-left:15px; margin-top:10px; border-radius: 10%;"> --%>	                                     					 
 					</div>                                     					 
 		<%-- <div class="btn_one">                                     					 
 				<c:if test="${sessionScope.session_user_num == onclass.user_num}">

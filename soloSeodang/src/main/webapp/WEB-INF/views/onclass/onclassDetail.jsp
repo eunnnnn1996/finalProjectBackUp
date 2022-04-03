@@ -3,11 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- 외부이미지 불러오기 -->
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+
 
 <!-- 모달 부트스트랩 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
@@ -15,7 +20,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
 <!-- 리플 -->
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/onclass.reply.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/onclass.reply.js"></script> --%>
 
 <!-- 아임포트 임포트 -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -134,20 +139,35 @@ function iamport(){
 	    alert(msg);
 	});
 }
+
+/////////////////////////////////////////////////////////////////////
+
 </script>
    
 
 ${onclass.on_name}
 수업 등록일 : ${onclass.reg_date}
 <div class="align-center">
-	<img src="imageView.do?on_num=${onclass.on_num}" style="max-width:500px">
+	<%-- <img src="imageView2.do?on_num=${onclass.on_num}" style="max-width:500px"> --%>
 </div>
 글내용 : ${onclass.on_content}
-
-
 ${onclass.on_price}
 ${onclass.reg_date}
 
+<b>다중 업로드 파일</b>
+<c:forEach var="uplist" items="${uplist}" varStatus="vs">
+	<div>
+		imgrink : ${uplist.o_name}
+		imgname : ${uplist.file_name}
+		1 : <img src="C:/javaWork/image/${uplist.file_name}" width="15px" height="15px">
+		2 : <img src="C:/javaWork/image/${uplist.file_name}" width="15px" height="15px">
+		3 : <img src="<c:url value="/image/${uplist.file_name}"/>"/>
+		4 : <img src="<spring:url value='/image/${uplist.file_name}'/>"/>
+		5 : <img src="<spring:url value='/image/${uplist.file_name}'/>"/>
+		6 : <img src="<c:url value="/img/${uplist.file_name}"/>"/>
+		
+	</div>
+</c:forEach>
       	<!-- 별 아이콘 반복 -->
        <c:if test="${onclass.avgqna == 0}">
        		<img src="../resources/image/star2.png" width="15px" height="15px">
@@ -249,31 +269,19 @@ ${onclass.reg_date}
 			<a data-bs-toggle="modal" data-bs-target="#staticBackdrop${vs.index}">수정</a>
 			<!-- 수정 모달 끝 -->
 			<a href="${pageContext.request.contextPath}/onclass/deleteOstar.do">삭제</a>
-			<a onclick="location.href='ratingWrite.do?ostar_num=${ostar.ostar_num}'">답글</a>
+			<%-- <a onclick="location.href='ratingWrite.do?ostar_num=${ostar.ostar_num}'">답글</a> --%>
+
 			<button type="button" class="btn btn-dark" onclick="location.href='deleteOstar.do?ostar_num=${ostar.ostar_num}'">삭제</button>
 			</div>
-			</li>		
 			
-			<li>
-				<!-- 댓글 시작  -->
-				<div id="reply_div">
-				<form id="re_form">
-				<input type="hidden" name="ostar_num" value="${ostar.ostar_num}" id="ostar_num">
-				<textarea rows="5" cols="80" name="ore_content" id="ore_content" class="rep-content"
-				 <c:if test="${empty session_user_auth || session_user_auth<=2 }">disabled="disabled"</c:if>
-				><c:if test="${empty session_user_auth}">로그인 후 작성</c:if></textarea>
-				<c:if test="${!empty session_user_auth && session_user_auth>=3 }">
-					<div id="re_first">
-						<span class="letter-count">300/300</span>
-					</div>
-						<div id="re_second" class="align-right">
-							<input type="submit" value="등록" >
-						</div>
-					</c:if>
-					</form>
-				</div>
-				<!-- 댓글 끝 -->
-			</li>	
+			<c:if test="${session_user_auth == 3}">
+			<form action="" id="" method="post" id=""> 
+				<input type="text"/>
+			   	<input type="submit" value="답글">
+			</form>
+			</c:if>
+			
+			</li>
 		</ul>	
 	</div>
 </div>
@@ -316,4 +324,5 @@ ${onclass.reg_date}
 		</div>
 <!-- 모달 끝 -->
 </c:forEach>
+
 <div class="align-center">${pagingHtml}</div>

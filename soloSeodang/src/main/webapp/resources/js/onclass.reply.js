@@ -115,7 +115,7 @@ $(function(){
 		$('#re_first .letter-count').text('300/300');
 	}
 	//글자수 체크
-	$(document).on('keyup','textarea',function(){
+	$(document).on('keyup','[id^=ore_content]',function(){
 		let inputLength = $(this).val().length;
 		if(inputLength>300){
 			$(this).val($(this).val().substring(0,300));
@@ -250,6 +250,12 @@ $(function(){
 			}
 		});
 	});
+	
+	///////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////
+	
+	
 	//초기 데이터 목록 호출
 	selectData(1,$('#ostar_num').val());
 });

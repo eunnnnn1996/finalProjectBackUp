@@ -1,5 +1,6 @@
 package kr.spring.onclass.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import kr.spring.onclass.vo.OnclassVO;
 import kr.spring.onclass.vo.OnlikeVO;
 import kr.spring.onclass.vo.OstarReplyVO;
 import kr.spring.onclass.vo.OstarVO;
+import kr.spring.onclass.vo.UploadFileVO;
 import kr.spring.qna.vo.OqnaReplyVO;
 import kr.spring.user.vo.UserVO;
 
@@ -20,8 +22,8 @@ public interface OnclassMapper {
 	public List<OnclassVO> selectList(Map<String,Object> map);
 	public List<OnclassVO> hitList(Map<String, Object> map);
 	public int selectRowCount(Map<String,Object> map);
-	@Insert("insert into onclass (on_num, user_num,on_name,category_num,on_price,on_content,uploadfile,filename) "
-			+ "values(onclass_seq.nextval,#{user_num},#{on_name},#{category_num},#{on_price},#{on_content},#{uploadfile},#{filename})")
+	@Insert("insert into onclass (on_num, user_num,on_name,category_num,on_price,on_content) "
+			+ "values(#{on_num},#{user_num},#{on_name},#{category_num},#{on_price},#{on_content})")
 	public void insertOnclass(OnclassVO onclassVO);
 	@Select("select * from onclass where on_num = #{on_num}")
 	public OnclassVO selectOnclass(Integer on_num);
@@ -38,6 +40,10 @@ public interface OnclassMapper {
 	//프로필정보 출력
 	@Select("select * from ouser o join ouser_detail z on o.user_num = z.user_num where o.user_num = #{user_num}")
 	public UserVO getProfile(int user_num);
+	//인서트 온넘 생성
+	@Select("select onclass_seq.nextval from dual")
+	public int selectOn_num();
+	
 	
 	/////////////////////////찜하기 시작////////////////////////////
 	//찜 눌렀는지 확인
@@ -95,6 +101,17 @@ public interface OnclassMapper {
 	public void updateReply(OstarReplyVO ostarReply);
 	@Delete("delete from ostar_reply where ore_num = #{ore_num}")
 	public void deleteReply(Integer re_num);
+	@Delete("delete from ostar_reply where ostar_num = #{ostar_num}")
+	public void deleteReplyByQnaNum(Integer ostar_num);
 
+	
+	//파일 다중 업로드
+	public void uploadFile(HashMap<String, Object> hm);
+	//currval 미리 생성
+	@Select("select onclass_seq.nextval from dual")
+	public int currSelect();
+	//파일 불러오기
+	@Select("select * from uploadfile where on_num = #{on_num}")
+	public List<UploadFileVO> selectFile(int on_num);
 
 }

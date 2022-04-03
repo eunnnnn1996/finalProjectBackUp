@@ -154,9 +154,11 @@ public class OnclassVO {
 	public String toString() {
 		return "OnclassVO [on_num=" + on_num + ", user_num=" + user_num + ", on_name=" + on_name + ", on_price="
 				+ on_price + ", hit=" + hit + ", category_num=" + category_num + ", on_content=" + on_content
-				+ ", reg_date=" + reg_date + ", modify_date=" + modify_date + ", avgqna=" + avgqna + ", deletePasswd="
-				+ deletePasswd + "]";
+				+ ", upload=" + upload + ", filename=" + filename + ", reg_date=" + reg_date + ", modify_date="
+				+ modify_date + ", avgqna=" + avgqna + ", deletePasswd=" + deletePasswd + "]";
 	}
+
+
 	
 	
 }

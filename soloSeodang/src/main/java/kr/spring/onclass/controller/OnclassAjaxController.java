@@ -38,11 +38,9 @@ public class OnclassAjaxController {
 	@ResponseBody	
 	public Map<String, Object> likeForm(int on_num,HttpSession session) {
 		Integer user_num = (Integer)session.getAttribute("session_user_num");
-		
-		
+	
 		Map<String,Object> map = new HashMap<String,Object>();
-		
-		
+
 		if(user_num == null) {//로그인 안됨
 			map.put("result", "logout");
 		}else {

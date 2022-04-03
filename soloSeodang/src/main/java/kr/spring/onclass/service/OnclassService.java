@@ -3,18 +3,21 @@ package kr.spring.onclass.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
 import kr.spring.onclass.vo.OnclassVO;
 import kr.spring.onclass.vo.OnlikeVO;
 import kr.spring.onclass.vo.OstarReplyVO;
 import kr.spring.onclass.vo.OstarVO;
+import kr.spring.onclass.vo.UploadFileVO;
 import kr.spring.qna.vo.OqnaReplyVO;
 import kr.spring.user.vo.UserVO;
 
 
 
 public interface OnclassService {
+	public int selectOn_num();
 	public int selectRowCount(Map<String,Object> map);
 	public void insertOnclass(OnclassVO onclassVO);
 	public int getOnclassCount();
@@ -60,6 +63,11 @@ public interface OnclassService {
 	public void updateReply(OstarReplyVO ostarReply);
 	public void deleteReply(Integer re_num);
 	
-	
+	//다중파일 업로드
+	public void fileUpload(String originalfileName, String saveFileName, long fileSize, int on_num);
+	//currval 미리 생성
+	public int currSelect();
+	//파일 가져오기
+	public List<UploadFileVO> selectFile(int on_num);
 	
 }
